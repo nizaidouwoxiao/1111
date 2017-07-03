@@ -6,7 +6,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import com.example.administrator.myapplication.bean.qq;
+import com.example.administrator.myapplication.bean.Exam;
+import com.example.administrator.myapplication.bean.ExamInfo;
 import com.example.administrator.myapplication.bean.utils.OkHttpUtils;
 
 public class MainActivity extends AppCompatActivity {
@@ -18,12 +19,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void test(View view) {
-        OkHttpUtils<qq>utils=new OkHttpUtils<>(getApplicationContext());
-        String url="http://101.251.196.90:8888/JztkServer/examInfo";
-        utils.url(url).targetClass(qq.class)
-                .execute(new OkHttpUtils.OnCompleteListener<qq>(){
+        OkHttpUtils<ExamInfo>utils=new OkHttpUtils<>(getApplicationContext());
+        String url="http://101.251.196.90:8080/JztkServer/examInfo";
+        utils.url(url).targetClass(ExamInfo.class)
+                .execute(new OkHttpUtils.OnCompleteListener<ExamInfo>(){
                     @Override
-                    public void onSuccess(qq result) {
+                    public void onSuccess(ExamInfo result) {
                         Log.e("main","result="+result);
                     }
 

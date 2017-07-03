@@ -4,7 +4,7 @@ package com.example.administrator.myapplication.bean;
  * Created by Administrator on 2017/6/28 0028.
  */
 
-public class qq {
+public class ExamInfo {
 
     /**
      * subjectTitle : c1
@@ -52,8 +52,8 @@ public class qq {
 
     @Override
     public String toString() {
-        return "考试科目："+subjectTitle+"\n"+
-                "考题数量："+questionCount+"\n"+
-                "考试时间："+limitTime+"分钟";
+        return "考试科目:" + subjectTitle + "\n" +
+                "考题数量:" + questionCount +"\n" +
+                "考试时间:" + limitTime +"分钟";
     }
 }

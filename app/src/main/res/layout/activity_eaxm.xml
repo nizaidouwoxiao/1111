@@ -13,6 +13,7 @@
         android:layout_marginTop="10dp"
         />
     <TextView
+        android:id="@+id/tv_examinfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="@string/exam_title"
@@ -37,6 +38,7 @@
             android:textColor="#000"
             android:textSize="18sp"/>
         <TextView
+            android:id="@+id/tv_exam_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="这个标志是什么意思？"
@@ -44,6 +46,7 @@
             android:textSize="18sp"/>
     </LinearLayout>
      <ImageView
+         android:id="@+id/in_exam_image"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
          tools:src="@mipmap/xx"
@@ -61,6 +64,7 @@
             android:textColor="#000"
             android:textSize="18sp"/>
         <TextView
+            android:id="@+id/tv_Op1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="线形诱导标志"
@@ -80,6 +84,7 @@
             android:textColor="#000"
             android:textSize="18sp"/>
         <TextView
+            android:id="@+id/tv_Op2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="合流诱导标志"
@@ -99,6 +104,7 @@
             android:textColor="#000"
             android:textSize="18sp"/>
         <TextView
+            android:id="@+id/tv_Op3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="分流诱导标志"
@@ -118,6 +124,7 @@
             android:textColor="#000"
             android:textSize="18sp"/>
         <TextView
+            android:id="@+id/tv_Op4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="转弯诱导标志"
