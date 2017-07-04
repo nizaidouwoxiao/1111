@@ -10,6 +10,7 @@ import android.support.v4.widget.TextViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -27,12 +28,14 @@ import java.util.List;
  */
 
 public class Eaxm extends AppCompatActivity {
-    TextView tvExamInfo,tvExamTitle,tvOp1,tvOp2,tvOp3,tvOp4;
+    TextView tvExamInfo,tvExamTitle,tvOp1,tvOp2,tvOp3,tvOp4,tvload;
     LinearLayout layoutLoading;
     ImageView mImageView;
     IExamBiz biz;
     boolean isLoadExamInfo=false;
     boolean isLoadQuestions=false;
+    boolean isLoadExamInfoReceiver=false;
+    boolean isLoadQuestionsReceiver=false;
 
     LoadExamBroadcast mLoadExamBroadcast;
     LoadQuestionBroadcast mLoadQuestionBroadcast;
@@ -70,18 +73,24 @@ public class Eaxm extends AppCompatActivity {
         tvOp2=(TextView) findViewById(R.id.tv_Op2);
         tvOp3=(TextView) findViewById(R.id.tv_Op3);
         tvOp4=(TextView) findViewById(R.id.tv_Op4);
+        tvload=(TextView)findViewById(R.id.tv_load);
         mImageView=(ImageView)findViewById(R.id.in_exam_image);
     }
 
     private void initData() {
-        if(isLoadExamInfo &&isLoadQuestions){
-            ExamInfo examInfo = ExamApplication.getInstance().getmExamInfo();
-            if(examInfo!=null){
-            showData(examInfo);
-            }
-            List<Exam> examList= ExamApplication.getInstance().getmExamList();
-            if(examList!=null){
-            showExam(examList);
+        if (isLoadExamInfoReceiver&&isLoadQuestionsReceiver){
+            if(isLoadExamInfo &&isLoadQuestions){
+                layoutLoading.setVisibility(View.GONE);
+                ExamInfo examInfo = ExamApplication.getInstance().getmExamInfo();
+                if(examInfo!=null){
+                    showData(examInfo);
+                }
+                List<Exam> examList= ExamApplication.getInstance().getmExamList();
+                if(examList!=null){
+                    showExam(examList);
+                }
+            }else {
+                tvload.setText("下载失败,点击重新下载");
             }
         }
     }
@@ -123,6 +132,7 @@ public class Eaxm extends AppCompatActivity {
             if (isSuccess){
                 isLoadExamInfo=true;
             }
+            isLoadExamInfoReceiver=true;
             initData();
         }
     }
@@ -134,6 +144,7 @@ public class Eaxm extends AppCompatActivity {
             if (isSuccess){
                 isLoadQuestions=true;
             }
+            isLoadQuestionsReceiver=true;
             initData();
         }
     }
