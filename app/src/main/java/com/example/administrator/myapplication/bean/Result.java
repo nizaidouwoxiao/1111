@@ -31,6 +31,7 @@ public class Result {
         return reason;
     }
 
+
     public void setReason(String reason) {
         this.reason = reason;
     }

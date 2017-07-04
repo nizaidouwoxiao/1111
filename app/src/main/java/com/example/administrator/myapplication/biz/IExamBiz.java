@@ -5,8 +5,8 @@ package com.example.administrator.myapplication.biz;
  */
 
 public interface IExamBiz {
-    void  beginExam();
-    void  nextQuestion();
+    void beginExam();
+    void nextQuestion();
     void preQuestion();
     void commitExam();
 }
