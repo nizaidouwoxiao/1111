@@ -13,11 +13,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.administrator.myapplication.bean.Exam;
 import com.example.administrator.myapplication.bean.ExamInfo;
 import com.example.administrator.myapplication.bean.Result;
+import com.example.administrator.myapplication.biz.ExamBiz;
 import com.example.administrator.myapplication.biz.IExamBiz;
 import com.squareup.picasso.Picasso;
 
@@ -28,10 +30,11 @@ import java.util.List;
  */
 
 public class Eaxm extends AppCompatActivity {
-    TextView tvExamInfo,tvExamTitle,tvOp1,tvOp2,tvOp3,tvOp4,tvload;
+    TextView tvExamInfo,tvExamTitle,tvOp1,tvOp2,tvOp3,tvOp4,tvload,tvNo;
     LinearLayout layoutLoading;
     ImageView mImageView;
     IExamBiz biz;
+    ProgressBar dialog;
     boolean isLoadExamInfo=false;
     boolean isLoadQuestions=false;
     boolean isLoadExamInfoReceiver=false;
@@ -48,6 +51,7 @@ public class Eaxm extends AppCompatActivity {
         mLoadQuestionBroadcast=new LoadQuestionBroadcast();
         setListener();
         initView();
+        biz=new ExamBiz();
         loadData();
     }
 
@@ -57,6 +61,9 @@ public class Eaxm extends AppCompatActivity {
     }
 
     private void loadData() {
+        layoutLoading.setEnabled(false);
+        dialog.setVisibility(View.VISIBLE);
+        tvload.setText("数据下载中...");
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -67,6 +74,7 @@ public class Eaxm extends AppCompatActivity {
 
     private void initView() {
         layoutLoading=(LinearLayout)findViewById(R.id.layout_loadding);
+        dialog=(ProgressBar) findViewById(R.id.load_dialog);
         tvExamInfo=(TextView) findViewById(R.id.tv_examinfo);
         tvExamTitle=(TextView) findViewById(R.id.tv_exam_title);
         tvOp1=(TextView) findViewById(R.id.tv_Op1);
@@ -74,7 +82,14 @@ public class Eaxm extends AppCompatActivity {
         tvOp3=(TextView) findViewById(R.id.tv_Op3);
         tvOp4=(TextView) findViewById(R.id.tv_Op4);
         tvload=(TextView)findViewById(R.id.tv_load);
+        tvNo=(TextView)findViewById(R.id.tv_exam_no);
         mImageView=(ImageView)findViewById(R.id.in_exam_image);
+        layoutLoading.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                loadData();
+            }
+        });
     }
 
     private void initData() {
@@ -85,27 +100,30 @@ public class Eaxm extends AppCompatActivity {
                 if(examInfo!=null){
                     showData(examInfo);
                 }
-                List<Exam> examList= ExamApplication.getInstance().getmExamList();
-                if(examList!=null){
-                    showExam(examList);
-                }
+                showExam( biz.getExam());
             }else {
+                layoutLoading.setEnabled(true);
+                dialog.setVisibility(View.GONE);
                 tvload.setText("下载失败,点击重新下载");
             }
         }
     }
 
-    private void showExam(List<Exam> examList) {
-        Exam exam=examList.get(0);
+    private void showExam(Exam exam) {
+        Log.e("showExam","showExam.exam"+exam);
         if(exam!=null){
+            tvNo.setText(biz.getExamIndex());
             tvExamTitle.setText(exam.getQuestion());
             tvOp1.setText(exam.getItem1());
             tvOp2.setText(exam.getItem2());
             tvOp3.setText(exam.getItem3());
             tvOp4.setText(exam.getItem4());
+            if(exam.getUrl()!=null&& exam.getUrl().equals("")){
             Picasso.with(Eaxm.this)
                     .load(exam.getUrl())
-                    .into(mImageView);
+                    .into(mImageView);}
+        }else {
+            mImageView.setVisibility(View.GONE);
         }
     }
 
@@ -122,6 +140,16 @@ public class Eaxm extends AppCompatActivity {
         if (mLoadQuestionBroadcast!=null){
             unregisterReceiver(mLoadQuestionBroadcast);
         }
+    }
+
+
+
+    public void nextExam(View view) {
+        showExam(biz.nextQuestion());
+    }
+
+    public void proExam(View view) {
+        showExam(biz.preQuestion());
     }
 
     class LoadExamBroadcast extends BroadcastReceiver{
