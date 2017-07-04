@@ -178,8 +178,29 @@ public class Eaxm extends AppCompatActivity {
             }else {
                 mImageView.setVisibility(View.GONE);
             }
-        }
+            resetOptions();
+            String userAnswer = exam.getUserAnswer();
+            if (userAnswer!=null && !userAnswer.equals("")){
+                int userCB=Integer.parseInt(userAnswer)-1;
+                cbs[userCB].setChecked(true);
+            }
 
+        }
+    }
+
+    private void resetOptions() {
+        for (CheckBox cb : cbs) {
+            cb.setChecked(false) ;
+        }
+    }
+
+    private  void saveUserAnswer(){
+        for (int i=0;i<cbs.length;i++){
+            if(cbs[i].isChecked()){
+                biz.getExam().setUserAnswer(String.valueOf(i+1));
+                return;
+            }
+        }
     }
 
     private void showData(ExamInfo examInfo) {
@@ -197,14 +218,14 @@ public class Eaxm extends AppCompatActivity {
         }
     }
 
-
-
-    public void nextExam(View view) {
-        showExam(biz.nextQuestion());
+    public void proExam(View view) {
+        saveUserAnswer();
+        showExam(biz.preQuestion());
     }
 
-    public void proExam(View view) {
-        showExam(biz.preQuestion());
+    public void nextExam(View view) {
+        saveUserAnswer();
+        showExam(biz.nextQuestion());
     }
 
     class LoadExamBroadcast extends BroadcastReceiver{
