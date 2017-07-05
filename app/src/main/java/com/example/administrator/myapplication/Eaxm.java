@@ -34,7 +34,7 @@ import java.util.List;
  */
 
 public class Eaxm extends AppCompatActivity {
-    TextView tvExamInfo,tvExamTitle,tvOp1,tvOp2,tvOp3,tvOp4,tvload,tvNo;
+    TextView tvExamInfo,tvExamTitle,tvOp1,tvOp2,tvOp3,tvOp4,tvload,tvNo,tvTime;
     CheckBox cb01,cb02,cb03,cb04;
     CheckBox[] cbs=new CheckBox[4];
     LinearLayout layoutLoading,layout03,layout04;
@@ -167,10 +167,11 @@ public class Eaxm extends AppCompatActivity {
             tvOp2.setText(exam.getItem2());
             tvOp3.setText(exam.getItem3());
             tvOp4.setText(exam.getItem4());
+            tvTime=(TextView)findViewById(R.id.tv_time);
 
-            tvOp3.setVisibility(exam.getItem3().equals("")?View.GONE:View.VISIBLE);
+            layout03.setVisibility(exam.getItem3().equals("")?View.GONE:View.VISIBLE);
             cb03.setVisibility(exam.getItem3().equals("")?View.GONE:View.VISIBLE);
-            tvOp4.setVisibility(exam.getItem4().equals("")?View.GONE:View.VISIBLE);
+            layout04.setVisibility(exam.getItem4().equals("")?View.GONE:View.VISIBLE);
             cb04.setVisibility(exam.getItem4().equals("")?View.GONE:View.VISIBLE);
 
             if(exam.getUrl()!=null&& exam.getUrl().equals("")){
